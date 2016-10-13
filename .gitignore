@@ -1,0 +1,7 @@
+config.log
+config.status
+configure
+Makefile
+**/Makefile
+autom4te.cache
+**/*.o

@@ -1,0 +1,17 @@
+CXX=@PROG_CXX@
+STD=@PROG_STD@
+
+CPPAD=@CPPAD_DIR@
+EIGEN=@EIGEN_DIR@
+
+all: compile run
+
+compile:
+	$(CXX) --std=$(STD) -w -I ../ -I ${CPPAD} -I ${EIGEN} compare.cpp -o compare.o
+	chmod +x compare.o
+
+run: compile
+	./compare.o
+
+clean:
+	rm -f ./compare.o

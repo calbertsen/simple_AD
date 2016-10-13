@@ -1,0 +1,19 @@
+CXX=@PROG_CXX@
+STD=@PROG_STD@
+
+CPPAD=@CPPAD_DIR@
+EIGEN=@EIGEN_DIR@
+
+
+ALLFILES :=  $(shell find ./ -name "*.cpp")
+ALLFILES_OUT := $(patsubst %.cpp,%.o,$(ALLFILES))
+
+.PHONY(ALL):
+all: $(ALLFILES_OUT)
+
+$(ALLFILES_OUT): %.o :
+	$(CXX) --std=$(STD) -w -I ../ -I ${CPPAD} -I ${EIGEN} $*.cpp -o $*.o
+	./$*.o
+
+clean:
+	rm -f $(ALLFILES_OUT)

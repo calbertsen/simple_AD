@@ -1,0 +1,23 @@
+sudo: required
+language: c++
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
+env:
+  - STD=c++98
+  - STD=c++03
+  - STD=c++11
+  - STD=c++14
+  - STD=c++1z
+
+script:
+  - autoconf
+  - ./configure
+  - make test
+

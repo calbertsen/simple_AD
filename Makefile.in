@@ -1,0 +1,26 @@
+INCLUDEDIR=@includedir@
+
+all: test compare examples
+
+install:
+	ln -s $(CURDIR)/GrAD $(INCLUDEDIR)/
+
+.PHONY: test
+test:
+	$(MAKE) all -C test
+
+.PHONY: compare
+compare:
+	$(MAKE) all -C compare
+
+.PHONY: examples
+examples:
+	$(MAKE) all -C examples
+
+clean:
+	$(MAKE) clean -C test
+	$(MAKE) clean -C compare
+	$(MAKE) clean -C examples
+
+uninstall:
+	rm $(INCLUDEDIR)/GrAD

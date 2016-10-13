@@ -1,0 +1,35 @@
+CXX=@PROG_CXX@
+STD=@PROG_STD@
+
+
+UNARY :=  $(shell find ./operations_unary -name "*.cpp")
+UNARY_OUT := $(patsubst %.cpp,%.o,$(UNARY))
+
+
+RMATH :=  $(shell find ./operations_rmath -name "*.cpp")
+RMATH_OUT := $(patsubst %.cpp,%.o,$(RMATH))
+
+OTHER :=  $(shell find ./other -name "*.cpp")
+OTHER_OUT := $(patsubst %.cpp,%.o,$(OTHER))
+
+
+.PHONY(all):
+all: $(UNARY_OUT) $(RMATH_OUT) $(OTHER_OUT)
+
+$(UNARY_OUT): %.o :
+	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
+	./$*.o
+
+$(RMATH_OUT): %.o :
+	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD) -lRmath
+	./$*.o
+
+$(OTHER_OUT): %.o :
+	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
+	./$*.o
+
+clean:
+	rm -f $(UNARY_OUT)
+	rm -f $(RMATH_OUT)
+	rm -f $(OTHER_OUT)
+

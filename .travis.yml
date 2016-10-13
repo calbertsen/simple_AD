@@ -2,16 +2,6 @@ sudo: required
 dist: trusty
 language: c++
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.6
-    packages:
-      - gcc-5
-      - g++-5
-      - clang-3.6
-
 os:
   - linux
   - osx
@@ -27,6 +17,14 @@ env:
   - STD=c++14
   - STD=c++1z
 
+
+matrix:
+  exclude:
+  - compiler: gcc
+    env: STD=c++14
+  - compiler: gcc
+    env: STD=c++1z
+    
 script:
   - autoconf
   - ./configure

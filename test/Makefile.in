@@ -14,7 +14,7 @@ OTHER_OUT := $(patsubst %.cpp,%.o,$(OTHER))
 
 
 .PHONY(all):
-all: $(UNARY_OUT) $(RMATH_OUT) $(OTHER_OUT)
+all: $(UNARY_OUT) $(OTHER_OUT)
 
 $(UNARY_OUT): %.o :
 	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)

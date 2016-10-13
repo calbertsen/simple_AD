@@ -3,6 +3,10 @@
 //
 // Copyright (C), Christoffer Moesgaard Albertsen <cmoe@aqua.dtu.dk>
 
+#ifndef _GRAD_RMATH_LIBRARY_
+#define _GRAD_RMATH_LIBRARY_
+
+
 #include <cmath>
 #include <vector>
 #include <string>
@@ -14,3 +18,5 @@ namespace GrAD {
 		    }
 
 }
+
+#endif

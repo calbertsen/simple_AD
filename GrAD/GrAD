@@ -3,6 +3,10 @@
 //
 // Copyright (C), Christoffer Moesgaard Albertsen <cmoe@aqua.dtu.dk>
 
+
+#ifndef _GRAD_BASE_LIBRARY_
+#define _GRAD_BASE_LIBRARY_
+
 #include <cmath>
 #include <vector>
 #include <string>
@@ -59,3 +63,5 @@ using std::log2;
 #include "src/AD.hpp"
 
 }
+
+#endif

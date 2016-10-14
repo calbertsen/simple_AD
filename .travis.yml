@@ -20,9 +20,9 @@ env:
 
 matrix:
   exclude:
-  - compiler: gcc
+  - os: linux
     env: STD=c++14
-  - compiler: gcc
+  - os: linux
     env: STD=c++1z
     
 script:

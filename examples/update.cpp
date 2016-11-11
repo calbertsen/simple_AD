@@ -46,7 +46,7 @@ void update_grad(int seed){
     grd->Independent(x);
     grd->Independent(y);
 
-    AD<double> z = simple_fn(x,y);
+    AD<double> z = x+y; //simple_fn(x,y);
     double fn = z.fn();
     std::cout << "Function value:\n";
     std::cout << fn << "\n";
@@ -74,7 +74,8 @@ void update_grad(int seed){
 
 
     std::cout << std::endl << std::endl;
-    
+
+    delete grd;
     return;
 }
 

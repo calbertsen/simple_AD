@@ -48,7 +48,8 @@ void eigen_grad(int seed){
       std::cout << gr[i] << "  ";
 
     std::cout << std::endl << std::endl;
-   
+
+    delete grd;
     return;
 }
 

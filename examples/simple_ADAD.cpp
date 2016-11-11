@@ -68,7 +68,8 @@ void simple_ADAD_grad(int seed){
     }
 
     std::cout << std::endl << std::endl;
-    
+
+    delete grd;
     return;
 }
 

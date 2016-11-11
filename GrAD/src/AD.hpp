@@ -13,6 +13,7 @@ public:
 public:
   
   AD();
+  AD(const AD<T>& x);
   // AD(T x0, string name, ADparlist<T>* graph);
   AD(T x0);
 
@@ -99,7 +100,14 @@ public:
 
 template<class T>
 AD<T>::AD(){
+  //std::cout << "Hello from defualt constructor\n";
   root = NULL;
+}
+
+template<class T>
+AD<T>::AD(const AD<T>& x){
+  //std::cout << "Hello from copy constructor\n";
+  root = x.root;
 }
 
 // template<class T>
@@ -122,6 +130,7 @@ void AD<T>::toParameter(string name, int paramNum, ADparlist<T>* graph){
 
 template<class T>
 AD<T>::AD(T x0){
+  //std::cout << "Hello from value constructor\n";
   root = new ADconstant<T>(x0);
   this->root->setValue(x0);
 }
@@ -158,31 +167,27 @@ string AD<T>::JSON(){
 
 template<class T>
 AD<T> AD<T>::operator+(const AD<T>& other) const{
-  AD<T> newAD = AD(*this);
-  ADsum<T>* newRoot = new ADsum<T>(root,other.root);
-  newAD.root = newRoot;
+  AD<T> newAD = AD();
+  newAD.root = new ADsum<T>(root,other.root);
   return newAD;
 }
 
 template<class T>
 AD<T>& AD<T>::operator+=(const AD<T>& other){
-  //AD<T> newAD = AD(*this);
-  ADsum<T>* newRoot = new ADsum<T>(root,other.root);
-  root = newRoot;
+  root = new ADsum<T>(root,other.root);;
   return *this;
 }
 
 template<class T>
 AD<T> AD<T>::operator-() const{
-  AD<T> newAD = AD(*this);
-  ADusubtract<T>* newRoot = new ADusubtract<T>(root);
-  newAD.root = newRoot;
+  AD<T> newAD = AD();
+  newAD.root = new ADusubtract<T>(root);;
   return newAD;
 }
 
 template<class T>
 AD<T> AD<T>::operator-(const AD<T>& other) const{
-  AD<T> newAD = AD(*this);
+  AD<T> newAD = AD();
   ADsubtract<T>* newRoot = new ADsubtract<T>(root,other.root);
   newAD.root = newRoot;
   return newAD;
@@ -190,42 +195,34 @@ AD<T> AD<T>::operator-(const AD<T>& other) const{
 
 template<class T>
 AD<T>& AD<T>::operator-=(const AD<T>& other){
-  //AD<T> newAD = AD(*this);
-  ADsubtract<T>* newRoot = new ADsubtract<T>(root,other.root);
-  root = newRoot;
+  root = new ADsubtract<T>(root,other.root);
   return *this;
 }
 
 template<class T>
 AD<T> AD<T>::operator*(const AD<T>& other) const{
-  AD<T> newAD = AD(*this);
-  ADprod<T>* newRoot = new ADprod<T>(root,other.root);
-  newAD.root = newRoot;
+  AD<T> newAD = AD();
+  newAD.root = new ADprod<T>(root,other.root);
   return newAD;
 }
 
 template<class T>
 AD<T>& AD<T>::operator*=(const AD<T>& other){
-  //AD<T> newAD = AD(*this);
-  ADprod<T>* newRoot = new ADprod<T>(root,other.root);
-  root = newRoot;
+  root = new ADprod<T>(root,other.root);
   return *this;
 }
 
 
 template<class T>
 AD<T> AD<T>::operator/(const AD<T>& other) const{
-  AD<T> newAD = AD(*this);
-  ADdiv<T>* newRoot = new ADdiv<T>(root,other.root);
-  newAD.root = newRoot;
+  AD<T> newAD = AD();
+  newAD.root = new ADdiv<T>(root,other.root);
   return newAD;
 }
 
 template<class T>
 AD<T>& AD<T>::operator/=(const AD<T>& other){
-  //AD<T> newAD = AD(*this);
-  ADdiv<T>* newRoot = new ADdiv<T>(root,other.root);
-  root = newRoot;
+  root = new ADdiv<T>(root,other.root);
   return *this;
 }
 

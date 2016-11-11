@@ -11,17 +11,17 @@ namespace grad {
 
     srand(seed);
 
-    vector<string> params(2);
-    params[0] = "x";
-    params[1] = "y";
-    ADparlist<double>* grd = new ADparlist<double>(params);
+    ADparlist<double>* grd = new ADparlist<double>();
 
     vector<double> x0(2);
     x0[0] = rand() / (double)RAND_MAX;
     x0[1] = rand() / (double)RAND_MAX;
   
-    AD<double> x(x0[0],"x",grd);
-    AD<double> y(x0[1],"y",grd);
+    AD<double> x(x0[0]);
+    AD<double> y(x0[1]);
+
+    grd->Independent(x);
+    grd->Independent(y);
 
     // Time to calculate double function
     t = clock();

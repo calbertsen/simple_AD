@@ -19,11 +19,10 @@ vector<bool> cosh_test(int seed){
   double fnTrue = cosh(x0);
   double grTrue = sinh(x0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = cosh(x);
   double fn = z.fn();
   double gr = z.gr()[0];

@@ -11,12 +11,7 @@ namespace grad {
 
     srand(seed);
 
-    vector<string> params(na+1);
-    for(int i = 0; i < na; ++i){
-      params[i] = "a" + string(std::to_string(i));
-    }
-    params[na] = "x";
-    ADparlist<double>* grd = new ADparlist<double>(params);
+    ADparlist<double>* grd = new ADparlist<double>();
 
     vector<double> a0(na);
     for(int i = 0; i < a0.size(); ++i)
@@ -25,8 +20,11 @@ namespace grad {
     
     vector<AD<double> > a(na);
     for(int i = 0; i < na; ++i)
-      a[i] = AD<double>(a0[i],params[i],grd);
-    AD<double> x(x0,"x",grd);
+      a[i] = AD<double>(a0[i]);
+    AD<double> x(x0);
+
+    grd->Independent(a);
+    grd->Independent(x);
 
     // Time to calculate double function
     t = clock();

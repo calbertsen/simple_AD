@@ -10,12 +10,20 @@
 #include <cmath>
 #include <vector>
 #include <string>
-
+#include <sstream>
 
 namespace GrAD {
 
 using std::vector;
 using std::string;
+
+using std::stringstream;
+
+string itos(int i){
+  std::stringstream s;
+  s << i;
+  return s.str();
+}
 
 // Use std operations
 

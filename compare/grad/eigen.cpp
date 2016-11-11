@@ -12,11 +12,7 @@ namespace grad {
 
     srand(seed);
 
-    vector<string> params((na*na-na)/2);
-    for(int i = 0; i < params.size(); ++i){
-      params[i] = "x" + string(std::to_string(i));
-    }
-    ADparlist<double>* grd = new ADparlist<double>(params);
+    ADparlist<double>* grd = new ADparlist<double>();
 
     Matrix<double,Dynamic,Dynamic> x0(na,na);
     for(int i = 0; i < na; ++i)
@@ -38,7 +34,8 @@ namespace grad {
 	}else if(i == j){
 	  x(i,j) = AD<double>(1.0);
     	}else{
-    	  x(i,j) = AD<double>(x0(i,j),params[indx++],grd);
+    	  x(i,j) = AD<double>(x0(i,j));
+	  grd->Independent(x(i,j));
     	}
       
 

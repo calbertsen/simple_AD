@@ -18,17 +18,24 @@ void eigen_grad(int seed){
       
     typedef Eigen::Matrix<AD<double>,Dynamic,1> ADVec;
   
-    vector<string> params = {"v1","v2","v3","w1","w2","w3"};
-    ADparlist<double>* grd = new ADparlist<double>(params);
+    ADparlist<double>* grd = new ADparlist<double>();
 
     ADVec v(3);
     ADVec w(3);
-    v[0] = AD<double>(1,"v1",grd);
-    v[1] = AD<double>(2,"v2",grd);
-    v[2] = AD<double>(3,"v3",grd);
-    w[0] = AD<double>(0,"w1",grd);
-    w[1] = AD<double>(1,"w2",grd);
-    w[2] = AD<double>(2,"w3",grd);
+    v[0] = AD<double>(1);
+    v[1] = AD<double>(2);
+    v[2] = AD<double>(3);
+    w[0] = AD<double>(0);
+    w[1] = AD<double>(1);
+    w[2] = AD<double>(2);
+
+    // grd->Independent can not handle Eigen::Matrix
+    for(int i = 0; i < 3; ++i){
+      grd->Independent(v[i]);
+    }
+    for(int i = 0; i < 3; ++i){
+      grd->Independent(w[i]);
+    }
 
     Matrix<AD<double>,Dynamic,Dynamic> z = v.transpose() * w;
     std::cout << "Dimension of inner product:" << std::endl;

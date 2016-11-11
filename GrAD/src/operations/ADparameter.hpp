@@ -7,8 +7,8 @@
 template<class T>
 struct ADparameter : public ADnode<T>{
 
-  ADparameter(string name, ADparlist<T>* graph);
-  ADparameter(T x0, string name, ADparlist<T>* graph);
+  ADparameter(string name, int paramNum, ADparlist<T>* graph);
+  ADparameter(T x0, string name, int paramNum, ADparlist<T>* graph);
 
   
   T fn(vector<T> x);
@@ -20,14 +20,14 @@ struct ADparameter : public ADnode<T>{
 
 
 template<class T>
-ADparameter<T>::ADparameter(string name, ADparlist<T>* graph) :
-  ADnode<T>(name, graph){
+ADparameter<T>::ADparameter(string name, int paramNum, ADparlist<T>* graph) :
+  ADnode<T>(name, paramNum, graph){
   this->setValue(T(0.0));
 }
 
 template<class T>
-ADparameter<T>::ADparameter(T x0, string name, ADparlist<T>* graph) :
-  ADnode<T>(name, graph){
+ADparameter<T>::ADparameter(T x0, string name, int paramNum, ADparlist<T>* graph) :
+  ADnode<T>(name, paramNum, graph){
   this->setValue(x0);
 }
 
@@ -56,6 +56,7 @@ vector<T> ADparameter<T>::dfn(vector<T> x){
 template<class T>
 void ADparameter<T>::bdfn(T w, vector<T>& theta){
   theta[this->whichParam] += w;
+  return;
 }
 
 template<class T>

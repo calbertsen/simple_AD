@@ -29,10 +29,7 @@ void update_grad(int seed){
 
     srand(seed);
 
-    vector<string> params(2);
-    params[0] = "x";
-    params[1] = "y";
-    ADparlist<double>* grd = new ADparlist<double>(params);
+    ADparlist<double>* grd = new ADparlist<double>();
 
     vector<double> x0(2);
     x0[0] = (rand() / (double)RAND_MAX);
@@ -43,8 +40,11 @@ void update_grad(int seed){
     std::cout << "values: \n";
     std::cout << x0[0] << "  " << x0[1] << "\n\n";
     
-    AD<double> x(x0[0],"x",grd);
-    AD<double> y(x0[1],"y",grd);
+    AD<double> x(x0[0]);
+    AD<double> y(x0[1]);
+
+    grd->Independent(x);
+    grd->Independent(y);
 
     AD<double> z = simple_fn(x,y);
     double fn = z.fn();

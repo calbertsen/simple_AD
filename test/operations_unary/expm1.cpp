@@ -22,11 +22,10 @@ vector<bool> expm1_test(int seed){
   double fnTrue = expm1(x0);
   double grTrue = exp(x0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = expm1(x);
   double fn = z.fn();
   double gr = z.gr()[0];

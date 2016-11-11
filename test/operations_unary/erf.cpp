@@ -22,11 +22,10 @@ vector<bool> erf_test(int seed){
   double fnTrue = erf(x0);
   double grTrue = 2.0 * exp(-(x0*x0)) / sqrt(M_PI);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = erf(x);
   double fn = z.fn();
   double gr = z.gr()[0];

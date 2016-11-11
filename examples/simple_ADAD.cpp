@@ -29,23 +29,25 @@ void simple_ADAD_grad(int seed){
 
     srand(seed);
 
-    vector<string> params(2);
-    params[0] = "x";
-    params[1] = "y";
-    ADparlist<double>* grd0 = new ADparlist<double>(params);
-    ADparlist<AD<double> >* grd = new ADparlist<AD<double> >(params);
+    ADparlist<double>* grd0 = new ADparlist<double>();
+    ADparlist<AD<double> >* grd = new ADparlist<AD<double> >();
 
     vector<AD<double> > x0(2);
-    x0[0] = AD<double>(rand() / (double)RAND_MAX,"x",grd0);
-    x0[1] = AD<double>(rand() / (double)RAND_MAX,"y",grd0);
+    x0[0] = AD<double>(rand() / (double)RAND_MAX);
+    x0[1] = AD<double>(rand() / (double)RAND_MAX);
+
+    grd0->Independent(x0);
 
     std::cout << std::endl << std::endl << "Running AD of AD example" << std::endl << std::endl;
     
     std::cout << "values: \n";
     std::cout << x0[0].fn() << "  " << x0[1].fn() << "\n\n";
     
-    AD<AD<double> > x(x0[0],"x",grd);
-    AD<AD<double> > y(x0[1],"y",grd);
+    AD<AD<double> > x(x0[0]);
+    AD<AD<double> > y(x0[1]);
+
+    grd->Independent(x);
+    grd->Independent(y);
 
     AD<AD<double> > z = simple_fn(x,y);
     AD<double> fn = z.fn();
@@ -61,8 +63,8 @@ void simple_ADAD_grad(int seed){
     for(int i = 0; i < 2; ++i){
       vector<double> gri = gr[i].gr();
           for(int j = 0; j < 2; ++j)
-	    std::cout << gri[j] << "  ";
-	  std::cout << "\n";
+    	    std::cout << gri[j] << "  ";
+    	  std::cout << "\n";
     }
 
     std::cout << std::endl << std::endl;

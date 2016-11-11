@@ -19,11 +19,10 @@ vector<bool> lgammafn_test(int seed){
   double fnTrue = lgammafn(x0);
   double grTrue = psigamma(x0,0.0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  x->Independent(x);
   AD<double> z = lgammafn(x);
   double fn = z.fn();
   double gr = z.gr()[0];

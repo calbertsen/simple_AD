@@ -13,9 +13,11 @@ public:
 public:
   
   AD();
-  AD(T x0, string name, ADparlist<T>* graph);
+  // AD(T x0, string name, ADparlist<T>* graph);
   AD(T x0);
 
+  void toParameter(string name, int paramNum, ADparlist<T>* graph);
+  
   T forward_fn(vector<T> x);
   vector<T> forward_gr(vector<T> x);
 
@@ -100,14 +102,22 @@ AD<T>::AD(){
   root = NULL;
 }
 
+// template<class T>
+// AD<T>::AD(T x0, string ADparlist<T>* graph){
+//   int i = graph->which();
+//   if(i < 0){
+//     root = new ADconstant<T>(x0);
+//   }else{
+//     root = new ADparameter<T>(x0,name,graph);
+//   }
+// }
+
 template<class T>
-AD<T>::AD(T x0, string name, ADparlist<T>* graph){
-  int i = graph->which(name);
-  if(i < 0){
-    root = new ADconstant<T>(x0);
-  }else{
-    root = new ADparameter<T>(x0,name,graph);
-  }
+void AD<T>::toParameter(string name, int paramNum, ADparlist<T>* graph){
+  T x0 = this->root->curval;
+  //root = new ADparameter<T>(x0,name,graph);
+  new (root) ADparameter<T>(x0,name,paramNum,graph);
+  return;
 }
 
 template<class T>

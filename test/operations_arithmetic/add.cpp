@@ -36,16 +36,13 @@ bool add_test(int n, int seed){
   
   srand(seed);
   AD<double> res = 0.0;
-  vector<string> params(n);
-  for(int i = 0; i < n; ++i){
-    params[i] = "x"+ string(std::to_string(i));
-  }
-  ADparlist<double>* grd = new ADparlist<double>(params);
-  std::cout << "nparams: " << grd->nparams << "\n\n";
+  ADparlist<double>* grd = new ADparlist<double>();
 
   vector<AD<double> > X(n);
   for(int i = 0; i < n; ++i)
-    X[i] = AD<double>(rand()/(double)RAND_MAX,params[i],grd);
+    X[i] = AD<double>(rand()/(double)RAND_MAX);
+
+  grd->Independent(X);
   
   vector<double> x0(n);
   for(int i = 0; i < n; ++i){

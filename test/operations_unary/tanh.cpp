@@ -19,11 +19,10 @@ vector<bool> tanh_test(int seed){
   double fnTrue = tanh(x0);
   double grTrue = 1.0 - tanh(x0) * tanh(x0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = tanh(x);
   double fn = z.fn();
   double gr = z.gr()[0];

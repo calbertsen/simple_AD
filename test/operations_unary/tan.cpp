@@ -19,11 +19,10 @@ vector<bool> tan_test(int seed){
   double fnTrue = tan(x0);
   double grTrue = 1.0 + tan(x0) * tan(x0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = tan(x);
   double fn = z.fn();
   double gr = z.gr()[0];

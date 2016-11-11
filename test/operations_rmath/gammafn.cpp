@@ -19,11 +19,11 @@ vector<bool> gammafn_test(int seed){
   double fnTrue = gammafn(x0);
   double grTrue = psigamma(x0,0.0) * gammafn(x0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
 
-  AD<double> x(x0,"x",grd);
+  ADparlist<double>* grd = new ADparlist<double>();
+
+  AD<double> x(x0);
+  x->Independent(x0);
   AD<double> z = gammafn(x);
   double fn = z.fn();
   double gr = z.gr()[0];

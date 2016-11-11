@@ -19,11 +19,10 @@ vector<bool> sin_test(int seed){
   double fnTrue = sin(x0);
   double grTrue = cos(x0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = sin(x);
   double fn = z.fn();
   double gr = z.gr()[0];

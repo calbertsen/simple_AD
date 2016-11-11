@@ -22,11 +22,10 @@ vector<bool> asinh_test(int seed){
   double fnTrue = asinh(x0);
   double grTrue = 1.0/sqrt((x0*x0)+1.0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = asinh(x);
   double fn = z.fn();
   double gr = z.gr()[0];

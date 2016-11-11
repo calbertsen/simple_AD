@@ -19,11 +19,10 @@ vector<bool> psigamma1_test(int seed){
   double fnTrue = psigamma(x0,1.0);
   double grTrue = psigamma(x0,2.0);
 
-  vector<string> params(1);
-  params[0] = "x";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
+  AD<double> x(x0);
+  grd->Independent(x);
   AD<double> z = psigamma(x,1.0);
   double fn = z.fn();
   double gr = z.gr()[0];

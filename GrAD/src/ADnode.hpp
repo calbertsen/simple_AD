@@ -40,7 +40,7 @@ struct ADnode {
   
 protected:
   ADnode();
-  ADnode(string name, ADparlist<T>* graph);
+  ADnode(string name, int paramNum, ADparlist<T>* graph);
   ADnode(string name);
   ADnode(string name, ADnode<T>* L, ADnode<T>* R);
   ADnode(string name, ADnode<T>* L);
@@ -60,11 +60,11 @@ ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED")
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, ADparlist<T>* graph) : isBaseParam(true), baseName(name), grph(graph)
+ADnode<T>::ADnode(string name, int paramNum,ADparlist<T>* graph) : isBaseParam(true), baseName(name), whichParam(paramNum)
 { // Construct from "nothing"; creates a base parameter
-  //grph = graph;
+  grph = graph;
   //grph->addParam(name);
-  whichParam = graph->which(name);
+  //whichParam = graph->which(name);
   if(whichParam == -1)
     throw 101;//std::invalid_argument("Parameter must be pre-registered in graph");
   ptrL = NULL;

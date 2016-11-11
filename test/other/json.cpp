@@ -19,14 +19,15 @@ vector<bool> json_test(int seed){
   double z0 = rand()/(double)RAND_MAX;
 
   
-  vector<string> params(2);
-  params[0] = "x";
-  params[1] = "y";
-  ADparlist<double>* grd = new ADparlist<double>(params);
+  ADparlist<double>* grd = new ADparlist<double>();
 
-  AD<double> x(x0,"x",grd);
-  AD<double> y(y0,"y",grd);
-  AD<double> z(z0,"z",grd);
+  AD<double> x(x0);
+  AD<double> y(y0);
+  AD<double> z(z0);
+
+  grd->Independent(x);
+  grd->Independent(y);
+  grd->Independent(z);
 
   AD<double> res = exp(-pow(x,2.0)/y) + y/z;
   double fn = res.fn();

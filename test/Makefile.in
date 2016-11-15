@@ -17,7 +17,12 @@ MEM_OUT := $(patsubst %.cpp,%.o,$(MEM))
 
 
 .PHONY(all):
-all: $(UNARY_OUT) $(OTHER_OUT) $(MEM_OUT)
+all: suppress $(UNARY_OUT) $(OTHER_OUT) $(MEM_OUT)
+
+suppress:
+	$(CXX) suppress.cpp -o suppress.o -I../ --std=$(STD)
+	valgrind --error-exitcode=0 --leak-check=full --gen-suppressions=all --log-file=suppress.log ./suppress.o
+	sed '/^==/ d' < suppress.log > sup.supp
 
 $(UNARY_OUT): %.o :
 	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
@@ -33,10 +38,12 @@ $(OTHER_OUT): %.o :
 
 $(MEM_OUT): %.o :
 	$(CXX) $*.cpp -g -O0 -o $*.o -I../ --std=$(STD)
-	valgrind --error-exitcode=1 --leak-check=full ./$*.o
+	valgrind --error-exitcode=1 --gen-suppressions=all --leak-check=full ./$*.o
 
 clean:
 	rm -f $(UNARY_OUT)
 	rm -f $(RMATH_OUT)
 	rm -f $(OTHER_OUT)
-
+	rm -f suppress.log
+	rm -f sup.supp
+	rm -f suppress.o

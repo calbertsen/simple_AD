@@ -33,7 +33,7 @@ $(OTHER_OUT): %.o :
 
 $(MEM_OUT): %.o :
 	$(CXX) $*.cpp -g -O0 -o $*.o -I../ --std=$(STD)
-	valgrind --error-exitcode=1 --leak-check=full --log-fd=9 9>> /dev/null ./$*.o
+	valgrind --error-exitcode=1 --leak-check=full ./$*.o
 
 clean:
 	rm -f $(UNARY_OUT)

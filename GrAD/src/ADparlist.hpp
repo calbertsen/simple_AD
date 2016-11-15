@@ -57,14 +57,18 @@ template<class T>
 int ADparlist<T>::Independent(vector<AD<T> >* par){
   int res = 0;
   for(int i = 0; i < par->size(); ++i){
-    res += Independent(&par->operator[](i));
+    res += Independent(&(par->operator[](i)));
   }
   return res;
 }
 
 template<class T>
 int ADparlist<T>::Independent(vector<AD<T> >& par){
-  return Independent(&par);
+  int res = 0;
+  for(int i = 0; i < par.size(); ++i){
+    res += Independent(&(par[i]));
+  }
+  return res;
 };
 
 

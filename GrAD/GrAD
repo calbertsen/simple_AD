@@ -12,7 +12,6 @@
 #include <string>
 #include <sstream>
 
-
 namespace GrAD {
 
 using std::vector;

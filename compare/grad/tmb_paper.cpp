@@ -57,7 +57,8 @@ namespace grad {
     res[5] = greq; 
     res[6] = (t2+t3)/t1; 
     res[7] = t3/t1; 
-  
+
+    delete grd;
     return res;
   }
 

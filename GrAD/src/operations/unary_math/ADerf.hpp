@@ -50,9 +50,9 @@ vector<T> ADerf<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> erf(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADerf<T>* newRoot = new ADerf<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADerf<T>(orx));
   return newAD;
 }
 

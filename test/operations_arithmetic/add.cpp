@@ -119,7 +119,7 @@ bool add_test(int n, int seed){
     greq = greq && (x0[i] - grt[i] < 1e-16);
   std::cout << "Correct derivative: " << greq << "\n";
 
-  
+  delete grd;
   return feq && greq;
 
 }

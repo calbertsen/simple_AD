@@ -49,9 +49,9 @@ vector<T> ADsqrt<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> sqrt(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADsqrt<T>* newRoot = new ADsqrt<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADsqrt<T>(orx));
   return newAD;
 }
 

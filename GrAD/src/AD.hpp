@@ -6,7 +6,7 @@
 template<class T>
 class AD {
 
-public:
+private:
   
   ADnode<T>* root;
 
@@ -16,6 +16,10 @@ public:
   AD(const AD<T>& x);
   // AD(T x0, string name, ADparlist<T>* graph);
   AD(T x0);
+  ~AD(){
+    if(root != NULL)
+      root->prune(this);
+  }
 
   void toParameter(string name, int paramNum, ADparlist<T>* graph);
   
@@ -26,6 +30,28 @@ public:
   vector<T> gr();
   string JSON();
   void update(vector<T>& x);
+
+  void setRoot(ADnode<T>* r){
+    if(root != r){
+      ADnode<T>* oldRoot = root;
+      root = r;
+      if(root != NULL)
+     	root->addOwner(this);
+      if(oldRoot != NULL)
+     	oldRoot->prune(this);
+    }
+    return;
+  };
+
+  ADnode<T>* getRoot() const{
+    return root;
+  }
+
+  AD<T>& operator=(const AD<T>& other){
+    ADnode<T>* oro = other.getRoot();
+    setRoot(oro);
+    return *this;
+  };
   
   AD<T> operator+(const AD<T>& other) const;
   AD<T>& operator+=(const AD<T>& other);
@@ -100,14 +126,14 @@ public:
 
 template<class T>
 AD<T>::AD(){
-  //std::cout << "Hello from defualt constructor\n";
   root = NULL;
 }
 
 template<class T>
 AD<T>::AD(const AD<T>& x){
-  //std::cout << "Hello from copy constructor\n";
-  root = x.root;
+  root = NULL;
+  ADnode<T>* newRoot = x.getRoot();
+  setRoot(newRoot);
 }
 
 // template<class T>
@@ -123,16 +149,16 @@ AD<T>::AD(const AD<T>& x){
 template<class T>
 void AD<T>::toParameter(string name, int paramNum, ADparlist<T>* graph){
   T x0 = this->root->curval;
-  //root = new ADparameter<T>(x0,name,graph);
-  new (root) ADparameter<T>(x0,name,paramNum,graph);
+  setRoot(new ADparameter<T>(x0,name,paramNum,graph));
   return;
 }
 
 template<class T>
 AD<T>::AD(T x0){
-  //std::cout << "Hello from value constructor\n";
-  root = new ADconstant<T>(x0);
-  this->root->setValue(x0);
+  root = NULL;
+  setRoot(new ADconstant<T>(x0));
+  //root->isBaseParam = true; // Quick fix
+  return;
 }
 
 template<class T>
@@ -168,61 +194,75 @@ string AD<T>::JSON(){
 template<class T>
 AD<T> AD<T>::operator+(const AD<T>& other) const{
   AD<T> newAD = AD();
-  newAD.root = new ADsum<T>(root,other.root);
+  ADnode<T>* oro = other.getRoot();
+  ADnode<T>* ort = getRoot();
+  newAD.setRoot(new ADsum<T>(ort,oro));
   return newAD;
 }
 
+
 template<class T>
 AD<T>& AD<T>::operator+=(const AD<T>& other){
-  root = new ADsum<T>(root,other.root);;
+  ADnode<T>* oro = other.getRoot();
+  setRoot(new ADsum<T>(getRoot(),oro));
   return *this;
 }
 
 template<class T>
 AD<T> AD<T>::operator-() const{
   AD<T> newAD = AD();
-  newAD.root = new ADusubtract<T>(root);;
+  ADnode<T>* ort = getRoot();
+  newAD.setRoot(new ADusubtract<T>(ort));
   return newAD;
 }
+
 
 template<class T>
 AD<T> AD<T>::operator-(const AD<T>& other) const{
   AD<T> newAD = AD();
-  ADsubtract<T>* newRoot = new ADsubtract<T>(root,other.root);
-  newAD.root = newRoot;
+  ADnode<T>* oro = other.getRoot();
+  ADnode<T>* ort = getRoot();
+  newAD.setRoot(new ADsubtract<T>(ort,oro));
   return newAD;
 }
 
 template<class T>
 AD<T>& AD<T>::operator-=(const AD<T>& other){
-  root = new ADsubtract<T>(root,other.root);
+  ADnode<T>* oro = other.getRoot();
+  setRoot(new ADsubtract<T>(getRoot(),oro));
   return *this;
 }
 
 template<class T>
 AD<T> AD<T>::operator*(const AD<T>& other) const{
   AD<T> newAD = AD();
-  newAD.root = new ADprod<T>(root,other.root);
+  ADnode<T>* oro = other.getRoot();
+  ADnode<T>* ort = getRoot();
+  newAD.setRoot(new ADprod<T>(ort,oro));
   return newAD;
 }
 
 template<class T>
 AD<T>& AD<T>::operator*=(const AD<T>& other){
-  root = new ADprod<T>(root,other.root);
+  ADnode<T>* oro = other.getRoot();
+  setRoot(new ADprod<T>(getRoot(),oro));
   return *this;
 }
 
 
 template<class T>
 AD<T> AD<T>::operator/(const AD<T>& other) const{
+  ADnode<T>* oro = other.getRoot();
   AD<T> newAD = AD();
-  newAD.root = new ADdiv<T>(root,other.root);
+  ADnode<T>* ort = getRoot();
+  newAD.setRoot(new ADdiv<T>(ort,oro));
   return newAD;
 }
 
 template<class T>
 AD<T>& AD<T>::operator/=(const AD<T>& other){
-  root = new ADdiv<T>(root,other.root);
+  ADnode<T>* oro = other.getRoot();
+  setRoot(new ADdiv<T>(getRoot(),oro));
   return *this;
 }
 

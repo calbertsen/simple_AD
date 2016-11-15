@@ -48,9 +48,9 @@ vector<T> ADasinh<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> asinh(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADasinh<T>* newRoot = new ADasinh<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADasinh<T>(orx));
   return newAD;
 }
 

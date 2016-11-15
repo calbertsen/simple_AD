@@ -30,7 +30,8 @@ vector<bool> fabs_test(int seed){
 
   rOut[0] = feq;
   rOut[1] = greq;
-  
+
+  delete grd;
   return rOut;
 
 }

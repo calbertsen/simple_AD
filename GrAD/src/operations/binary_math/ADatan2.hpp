@@ -50,9 +50,10 @@ vector<T> ADatan2<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> atan2(const AD<T>& x, const AD<T>& y){
-  AD<T> newAD = AD<T>(x);
-  ADatan2<T>* newRoot = new ADatan2<T>(x.root,y.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  ADnode<T>* ory = y.getRoot();
+  newAD.setRoot(new ADatan2<T>(orx,ory));
   return newAD;
 }
 

@@ -49,9 +49,9 @@ vector<T> ADatanh<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> atanh(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADatanh<T>* newRoot = new ADatanh<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADatanh<T>(orx));
   return newAD;
 }
 

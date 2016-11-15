@@ -52,20 +52,22 @@ vector<T> ADpow<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> pow(const AD<T>& x, const AD<T>& y){
-  AD<T> newAD = AD<T>(x);
-  ADpow<T>* newRoot = new ADpow<T>(x.root,y.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  ADnode<T>* ory = y.getRoot();
+  newAD.setRoot(new ADpow<T>(orx,ory));
   return newAD;
 }
 
 template<class T>
-AD<T> pow(const AD<T>& x, const double y){
+AD<T> pow(const AD<T>& x, double y){
   AD<T> RAD = AD<T>(y);
-  AD<T> newAD = AD<T>(x);
-  ADpow<T>* newRoot = new ADpow<T>(x.root,RAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADpow<T>(orx,RAD.getRoot()));
   return newAD;
 }
+
 
 template<class T>
 void ADpow<T>::bdfn(T w, vector<T>& theta){

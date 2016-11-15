@@ -37,8 +37,7 @@ namespace grad {
     	  x(i,j) = AD<double>(x0(i,j));
 	  grd->Independent(x(i,j));
     	}
-      
-
+          
     // Time to calculate double function
     t = clock();
     double fnTrue = eigen_fn(x0);
@@ -47,6 +46,7 @@ namespace grad {
 
     // Time to create graph + function value
     t = clock();
+
     AD<double> z = eigen_fn(x);
     double fn = z.fn();
     t = clock() - t;
@@ -73,7 +73,8 @@ namespace grad {
     res[5] = greq; 
     res[6] = (t2+t3)/t1; 
     res[7] = t3/t1; 
-  
+
+    delete grd;
     return res;
   }
 

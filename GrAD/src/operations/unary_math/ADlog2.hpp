@@ -49,9 +49,9 @@ vector<T> ADlog2<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> log2(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADlog2<T>* newRoot = new ADlog2<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADlog2<T>(orx));
   return newAD;
 }
 

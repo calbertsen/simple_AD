@@ -48,9 +48,9 @@ vector<T> ADtan<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> tan(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADtan<T>* newRoot = new ADtan<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADtan<T>(orx));
   return newAD;
 }
 

@@ -81,9 +81,9 @@ vector<T> ADsign<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> sign(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADsign<T>* newRoot = new ADsign<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADsign<T>(orx));
   return newAD;
 }
 

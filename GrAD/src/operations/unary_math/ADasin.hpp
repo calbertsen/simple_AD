@@ -47,9 +47,9 @@ vector<T> ADasin<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> asin(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADasin<T>* newRoot = new ADasin<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADasin<T>(orx));
   return newAD;
 }
 

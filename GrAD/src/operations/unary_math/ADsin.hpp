@@ -48,9 +48,9 @@ vector<T> ADsin<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> sin(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADsin<T>* newRoot = new ADsin<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADsin<T>(orx));
   return newAD;
 }
 

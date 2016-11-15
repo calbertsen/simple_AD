@@ -48,9 +48,9 @@ vector<T> ADfabs<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> fabs(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADfabs<T>* newRoot = new ADfabs<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADfabs<T>(orx));
   return newAD;
 }
 

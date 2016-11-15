@@ -49,10 +49,10 @@ vector<T> ADgammafn<T>::dfn(vector<T> x){
 
 
 template<class T>
-AD<T> gammafn(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADgammafn<T>* newRoot = new ADgammafn<T>(newAD.root);
-  newAD.root = newRoot;
+AD<T> gammafn(AD<T> x){
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADgammafn<T>(orx));
   return newAD;
 }
 

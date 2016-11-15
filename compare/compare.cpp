@@ -204,9 +204,9 @@ int main(){
 #if __cplusplus >= 201103L
   std::cout << "Running Eigen example - trace of A * A^T (na=200)...\n";
 
-  //rsimple = grad::eigen_grad(674,200);
-  csimple = cppad::eigen_grad(674,200);
-  csimpleO = cppad::eigen_grad(674,200,true);
+  rsimple = grad::eigen_grad(674,20);
+  csimple = cppad::eigen_grad(674,20);
+  csimpleO = cppad::eigen_grad(674,20,true);
   cout << setw(10) << "";
   cout << setw(10) << "GrAD";
   cout << setw(10) << "CppAD";

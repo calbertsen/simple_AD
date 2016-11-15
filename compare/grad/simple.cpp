@@ -29,8 +29,9 @@ namespace grad {
     t = clock() - t;
     t1 = ((double)t)/((double)CLOCKS_PER_SEC);
 
-    // Time to create graph + function value
+    // // Time to create graph + function value
     t = clock();
+    AD<double> p(2.0);
     AD<double> z = simple_fn(x,y);
     double fn = z.fn();
     t = clock() - t;
@@ -57,7 +58,8 @@ namespace grad {
     res[5] = greq; 
     res[6] = (t2+t3)/t1; 
     res[7] = t3/t1; 
-  
+
+    delete grd;
     return res;
   }
 

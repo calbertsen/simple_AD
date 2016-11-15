@@ -47,9 +47,9 @@ vector<T> ADacos<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> acos(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADacos<T>* newRoot = new ADacos<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADacos<T>(orx));
   return newAD;
 }
 

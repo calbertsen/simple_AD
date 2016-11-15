@@ -44,7 +44,8 @@ vector<bool> json_test(int seed){
   
   string s0 = res.JSON();
   std::cout << s0 << std::endl<<std::endl;
-  
+
+  delete grd;
   return rOut;
 
 }

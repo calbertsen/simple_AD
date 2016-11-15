@@ -49,12 +49,11 @@ vector<T> ADexp<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> exp(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADexp<T>* newRoot = new ADexp<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADexp<T>(orx));
   return newAD;
 }
-
 
 template<class T>
 void ADexp<T>::bdfn(T w, vector<T>& theta){

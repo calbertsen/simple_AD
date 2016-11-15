@@ -48,9 +48,9 @@ vector<T> ADacosh<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> acosh(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADacosh<T>* newRoot = new ADacosh<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADacosh<T>(orx));
   return newAD;
 }
 

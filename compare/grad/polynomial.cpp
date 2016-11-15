@@ -17,15 +17,18 @@ namespace grad {
     for(int i = 0; i < a0.size(); ++i)
       a0[i] = rand() / (double)RAND_MAX;
     double x0 = rand() / (double)RAND_MAX;
-    
+    std::cout << a0[0] << "  " << a0[1] << "  " << x0 <<"\n";
+
     vector<AD<double> > a(na);
-    for(int i = 0; i < na; ++i)
+    for(int i = 0; i < na; ++i){
       a[i] = AD<double>(a0[i]);
+    }
+    
     AD<double> x(x0);
 
     grd->Independent(a);
     grd->Independent(x);
-
+    
     // Time to calculate double function
     t = clock();
     double fnTrue = polynomial_fn(x0,a0);
@@ -60,7 +63,8 @@ namespace grad {
     res[5] = greq; 
     res[6] = (t2+t3)/t1; 
     res[7] = t3/t1; 
-  
+
+    delete grd;
     return res;
   }
 

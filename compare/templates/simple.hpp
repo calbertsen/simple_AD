@@ -1,6 +1,6 @@
 
 template<class T>
-T simple_fn(T x, T y){
+T simple_fn(T x,T y){
   return exp(-pow(x,T(2.0))/y) + y;
 }
 

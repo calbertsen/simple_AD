@@ -50,9 +50,9 @@ vector<T> ADlgammafn<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> lgammafn(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADlgammafn<T>* newRoot = new ADlgammafn<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADlgammafn<T>(orx));
   return newAD;
 }
 

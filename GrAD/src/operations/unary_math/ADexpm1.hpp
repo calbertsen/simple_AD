@@ -49,9 +49,9 @@ vector<T> ADexpm1<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> expm1(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADexpm1<T>* newRoot = new ADexpm1<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADexpm1<T>(orx));
   return newAD;
 }
 

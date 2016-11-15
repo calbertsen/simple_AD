@@ -51,9 +51,9 @@ vector<T> ADpsigamma<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> psigamma(const AD<T>& x, double p){
-  AD<T> newAD = AD<T>(x);
-  ADpsigamma<T>* newRoot = new ADpsigamma<T>(newAD.root,p);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADpsigamma<T>(orx,p));
   return newAD;
 }
 

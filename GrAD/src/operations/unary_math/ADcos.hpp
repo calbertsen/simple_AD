@@ -48,9 +48,9 @@ vector<T> ADcos<T>::dfn(vector<T> x){
 
 template<class T>
 AD<T> cos(const AD<T>& x){
-  AD<T> newAD = AD<T>(x);
-  ADcos<T>* newRoot = new ADcos<T>(newAD.root);
-  newAD.root = newRoot;
+  AD<T> newAD;
+  ADnode<T>* orx = x.getRoot();
+  newAD.setRoot(new ADcos<T>(orx));
   return newAD;
 }
 

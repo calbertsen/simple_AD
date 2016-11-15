@@ -36,17 +36,11 @@ int main(){
   a1 = exp(c);
   a2 = exp(x);
 
-  a1 = expm1(c);
-  a2 = expm1(x);
-
   a1 = fabs(c);
   a2 = fabs(x);
 
   a1 = log(c);
   a2 = log(x);
-
-  a1 = log1p(c);
-  a2 = log1p(x);
 
   a1 = log10(c);
   a2 = log10(x);
@@ -88,8 +82,14 @@ int main(){
   a1 = exp2(c);
   a2 = exp2(x);
 
+  a1 = expm1(c);
+  a2 = expm1(x);
+
   a1 = log2(c);
   a2 = log2(x);
+
+  a1 = log1p(c);
+  a2 = log1p(x);
 
 #endif
 #endif

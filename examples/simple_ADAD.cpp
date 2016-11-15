@@ -39,9 +39,23 @@ void simple_ADAD_grad(int seed){
     grd0->Independent(x0);
 
     std::cout << std::endl << std::endl << "Running AD of AD example" << std::endl << std::endl;
+
+    std::cout << "Function:\nf:=(x,y) -> exp(-x^2.0/y) + y;\n"; 
     
     std::cout << "values: \n";
     std::cout << x0[0].fn() << "  " << x0[1].fn() << "\n\n";
+
+    std::cout << "\n\nCorresponding Maple code\n\n";
+    std::cout << "f("<<x0[0].fn() <<","<< x0[1].fn() << ");\n";
+    std::cout << "eval(diff(f(x, y), x), {x="<<x0[0].fn() <<",y="<< x0[1].fn() << "});\n";
+    std::cout << "eval(diff(f(x, y), y), {x="<<x0[0].fn() <<",y="<< x0[1].fn() << "});\n";
+    std::cout << "eval(diff(diff(f(x, y), x),x), {x="<<x0[0].fn() <<",y="<< x0[1].fn() << "});\n";
+    std::cout << "eval(diff(diff(f(x, y), x),y), {x="<<x0[0].fn() <<",y="<< x0[1].fn() << "});\n";
+    std::cout << "eval(diff(diff(f(x, y), y),x), {x="<<x0[0].fn() <<",y="<< x0[1].fn() << "});\n";
+    std::cout << "eval(diff(diff(f(x, y), y),y), {x="<<x0[0].fn() <<",y="<< x0[1].fn() << "});\n";
+
+    
+    std::cout << "\n\nResults from C++\n\n";
     
     AD<AD<double> > x(x0[0]);
     AD<AD<double> > y(x0[1]);

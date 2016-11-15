@@ -12,9 +12,12 @@ RMATH_OUT := $(patsubst %.cpp,%.o,$(RMATH))
 OTHER :=  $(shell find ./other -name "*.cpp")
 OTHER_OUT := $(patsubst %.cpp,%.o,$(OTHER))
 
+MEM :=  $(shell find ./memory ./operations_unary ./other -name "*.cpp")
+MEM_OUT := $(patsubst %.cpp,%.o,$(MEM))
+
 
 .PHONY(all):
-all: $(UNARY_OUT) $(OTHER_OUT)
+all: $(UNARY_OUT) $(OTHER_OUT) $(MEM_OUT)
 
 $(UNARY_OUT): %.o :
 	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
@@ -27,6 +30,10 @@ $(RMATH_OUT): %.o :
 $(OTHER_OUT): %.o :
 	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
 	./$*.o
+
+$(MEM_OUT): %.o :
+	$(CXX) $*.cpp -g -O0 -o $*.o -I../ --std=$(STD)
+	valgrind --error-exitcode=1 -v --leak-check=full ./$*.o
 
 clean:
 	rm -f $(UNARY_OUT)

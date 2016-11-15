@@ -48,7 +48,7 @@ vector<bool> atanh_test(int seed){
 int main(){
 
   vector<bool> r = atanh_test(289734);
-  if(r[0] & r[1]){
+  if(r[0] && r[1]){
     return 0;
   }else if(r[0] && !r[1]){
     return 1;

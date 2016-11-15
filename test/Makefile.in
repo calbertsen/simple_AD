@@ -12,7 +12,7 @@ RMATH_OUT := $(patsubst %.cpp,%.o,$(RMATH))
 OTHER :=  $(shell find ./other -name "*.cpp")
 OTHER_OUT := $(patsubst %.cpp,%.o,$(OTHER))
 
-MEM :=  $(shell find ./memory ./operations_unary ./other -name "*.cpp")
+MEM :=  $(shell find ./memory -name "*.cpp")
 MEM_OUT := $(patsubst %.cpp,%.o,$(MEM))
 
 

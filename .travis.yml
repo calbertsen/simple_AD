@@ -10,6 +10,16 @@ compiler:
   - gcc
   - clang
 
+addons:
+  apt:
+    packages:
+    - valgrind
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install valgrind; fi
+
+
 env:
   - STD=c++98
   - STD=c++03

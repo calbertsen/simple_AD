@@ -6,12 +6,17 @@
 
 
 template<class T>
-struct ADnode {
+class ADnode {
+  friend class AD<T>;
 
+  
+private:
+  int parents;
+  int owners;
+
+public:
+  
   ADparlist<T>* grph;
-
-  vector<ADnode<T>* > parents;
-  vector<const AD<T>* > owners;
 
   bool isBaseParam;
   string baseName;
@@ -20,6 +25,7 @@ struct ADnode {
   ADnode<T>* ptrR;
   T curval;
 
+  
   virtual T fn(vector<T> x);
   virtual vector<T> dfn(vector<T> x);
 
@@ -31,14 +37,14 @@ struct ADnode {
   void setValue(T x0);
   T getValue();
 
-  void addParent(ADnode<T>* p);
-  void removeParent(ADnode<T>* p);
+protected:
+  
   void prune(AD<T>* requester);
-  int whichParent(ADnode<T>* p);
-
   void addOwner(const AD<T>* o);
   void removeOwner(const AD<T>* o);
-  int whichOwner(const AD<T>* o);
+  
+  void addParent(ADnode<T>* p);
+  void removeParent(ADnode<T>* p);
   
   
 protected:
@@ -53,7 +59,7 @@ protected:
 
 
 template<class T>
-ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED"), parents()
+ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED"), parents(0), owners(0)
 {
   grph = NULL;
   whichParam = -100;
@@ -62,7 +68,7 @@ ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED"), parents()
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, int paramNum,ADparlist<T>* graph) : isBaseParam(true), baseName(name), whichParam(paramNum), parents()
+ADnode<T>::ADnode(string name, int paramNum,ADparlist<T>* graph) : isBaseParam(true), baseName(name), whichParam(paramNum), parents(0), owners(0)
 { 
   grph = graph;
   if(whichParam == -1)
@@ -72,7 +78,7 @@ ADnode<T>::ADnode(string name, int paramNum,ADparlist<T>* graph) : isBaseParam(t
 };
 
 template<class T>
-ADnode<T>::ADnode(string name) : isBaseParam(false), baseName(name), parents()
+ADnode<T>::ADnode(string name) : isBaseParam(false), baseName(name), parents(0), owners(0)
 { 
   grph = NULL;
   whichParam = -1;
@@ -82,7 +88,7 @@ ADnode<T>::ADnode(string name) : isBaseParam(false), baseName(name), parents()
 
 
 template<class T>
-ADnode<T>::ADnode(string name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false), baseName(name), parents() {
+ADnode<T>::ADnode(string name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false), baseName(name), parents(0), owners(0) {
   L->addParent(this);
   R->addParent(this);
   if((L->grph != R->grph) && L->grph != NULL && R->grph != NULL)
@@ -101,7 +107,7 @@ ADnode<T>::ADnode(string name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false),
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, ADnode<T>* L) : isBaseParam(false), baseName(name), parents() {
+ADnode<T>::ADnode(string name, ADnode<T>* L) : isBaseParam(false), baseName(name), parents(0), owners(0) {
   L->addParent(this);
   grph = L->grph;
   ptrL = L;
@@ -110,7 +116,7 @@ ADnode<T>::ADnode(string name, ADnode<T>* L) : isBaseParam(false), baseName(name
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, ADnode<T>& L, ADnode<T>& R) : isBaseParam(false), baseName(name), parents(){
+ADnode<T>::ADnode(string name, ADnode<T>& L, ADnode<T>& R) : isBaseParam(false), baseName(name), parents(0), owners(0){
   L.addParent(this);
   R.addParent(this);
   if(L.grph != R.grph)
@@ -179,70 +185,33 @@ T ADnode<T>::getValue(){
   return curval;
 };
 
-template<class T>
-int ADnode<T>::whichParent(ADnode<T>* p){
-  int res = -1;
-  int i = 0;
-  if(parents.size() == 0)
-    return res;
-  
-  do {
-    if(p == parents[i])
-      res = i;
-    ++i;
-  } while(res < 0 && i < parents.size());
-  return res;
-}
-
 
 template<class T>
 void ADnode<T>::addParent(ADnode<T>* p){
-  int wp = whichParent(p);
-  if(wp < 0)
-    parents.push_back(p);
+  parents++;
   return;
 };
 
 template<class T>
 void ADnode<T>::removeParent(ADnode<T>* p){
-  int wp = whichParent(p);
-  if(wp > -1)
-    parents.erase(parents.begin() + wp);
+  parents--;
   return;
 };
 
 
-
-
-template<class T>
-int ADnode<T>::whichOwner(const AD<T>* o){
-  int res = -1;
-  int i = 0;
-  if(owners.size() == 0)
-    return res;
-  
-  do {
-    if(o == owners[i])
-      res = i;
-    ++i;
-  } while(res < 0 && i < owners.size());
-  return res;
-}
-
-
 template<class T>
 void ADnode<T>::addOwner(const AD<T>* o){
-  int wo = whichOwner(o);
-  if(wo < 0)
-    owners.push_back(o);
+  if(o != NULL)
+    owners++;
   return;
 };
 
 template<class T>
 void ADnode<T>::removeOwner(const AD<T>* o){
-  int wo = whichOwner(o);
-  if(wo > -1)
-    owners.erase(owners.begin() + wo);
+  if(o != NULL)
+    owners--;
+  if(owners < 0)
+    throw "OUT OF BOUNDS";
   return;
 };
 
@@ -250,7 +219,7 @@ void ADnode<T>::removeOwner(const AD<T>* o){
 template<class T>
 void ADnode<T>::prune(AD<T>* requester){
   removeOwner(requester);
-  if(parents.size() == 0 && owners.size() == 0){
+  if(parents == 0 && owners == 0){
     if(ptrL != NULL){
       ptrL->removeParent(this);
       ptrL->prune(NULL);

@@ -49,11 +49,11 @@ protected:
   
 protected:
   ADnode();
-  ADnode(string name, int paramNum, ADparlist<T>* graph);
-  ADnode(string name);
-  ADnode(string name, ADnode<T>* L, ADnode<T>* R);
-  ADnode(string name, ADnode<T>* L);
-  ADnode(string name, ADnode<T>& L, ADnode<T>& R);
+  ADnode(const string& name, int paramNum, ADparlist<T>* graph);
+  ADnode(const string& name);
+  ADnode(const string& name, ADnode<T>* L, ADnode<T>* R);
+  ADnode(const string& name, ADnode<T>* L);
+  ADnode(const string& name, ADnode<T>& L, ADnode<T>& R);
 };
 
 
@@ -68,7 +68,7 @@ ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED"), parents(0),
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, int paramNum,ADparlist<T>* graph) : isBaseParam(true), baseName(name), whichParam(paramNum), parents(0), owners(0)
+ADnode<T>::ADnode(const string& name, int paramNum,ADparlist<T>* graph) : isBaseParam(true), baseName(name), whichParam(paramNum), parents(0), owners(0)
 { 
   grph = graph;
   if(whichParam == -1)
@@ -78,7 +78,7 @@ ADnode<T>::ADnode(string name, int paramNum,ADparlist<T>* graph) : isBaseParam(t
 };
 
 template<class T>
-ADnode<T>::ADnode(string name) : isBaseParam(false), baseName(name), parents(0), owners(0)
+ADnode<T>::ADnode(const string& name) : isBaseParam(false), baseName(name), parents(0), owners(0)
 { 
   grph = NULL;
   whichParam = -1;
@@ -88,7 +88,7 @@ ADnode<T>::ADnode(string name) : isBaseParam(false), baseName(name), parents(0),
 
 
 template<class T>
-ADnode<T>::ADnode(string name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false), baseName(name), parents(0), owners(0) {
+ADnode<T>::ADnode(const string& name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false), baseName(name), parents(0), owners(0) {
   L->addParent(this);
   R->addParent(this);
   if((L->grph != R->grph) && L->grph != NULL && R->grph != NULL)
@@ -107,7 +107,7 @@ ADnode<T>::ADnode(string name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false),
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, ADnode<T>* L) : isBaseParam(false), baseName(name), parents(0), owners(0) {
+ADnode<T>::ADnode(const string& name, ADnode<T>* L) : isBaseParam(false), baseName(name), parents(0), owners(0) {
   L->addParent(this);
   grph = L->grph;
   ptrL = L;
@@ -116,7 +116,7 @@ ADnode<T>::ADnode(string name, ADnode<T>* L) : isBaseParam(false), baseName(name
 }
 
 template<class T>
-ADnode<T>::ADnode(string name, ADnode<T>& L, ADnode<T>& R) : isBaseParam(false), baseName(name), parents(0), owners(0){
+ADnode<T>::ADnode(const string& name, ADnode<T>& L, ADnode<T>& R) : isBaseParam(false), baseName(name), parents(0), owners(0){
   L.addParent(this);
   R.addParent(this);
   if(L.grph != R.grph)

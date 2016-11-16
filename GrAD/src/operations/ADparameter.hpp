@@ -7,8 +7,8 @@
 template<class T>
 struct ADparameter : public ADnode<T>{
 
-  ADparameter(string name, int paramNum, ADparlist<T>* graph);
-  ADparameter(T x0, string name, int paramNum, ADparlist<T>* graph);
+  ADparameter(const string& name, int paramNum, ADparlist<T>* graph);
+  ADparameter(T x0, const string& name, int paramNum, ADparlist<T>* graph);
 
   
   T fn(vector<T> x);
@@ -20,13 +20,13 @@ struct ADparameter : public ADnode<T>{
 
 
 template<class T>
-ADparameter<T>::ADparameter(string name, int paramNum, ADparlist<T>* graph) :
+ADparameter<T>::ADparameter(const string& name, int paramNum, ADparlist<T>* graph) :
   ADnode<T>(name, paramNum, graph){
   this->setValue(T(0.0));
 }
 
 template<class T>
-ADparameter<T>::ADparameter(T x0, string name, int paramNum, ADparlist<T>* graph) :
+ADparameter<T>::ADparameter(T x0, const string& name, int paramNum, ADparlist<T>* graph) :
   ADnode<T>(name, paramNum, graph){
   this->setValue(x0);
 }

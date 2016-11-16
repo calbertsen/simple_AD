@@ -21,13 +21,14 @@ public:
       root->prune(this);
   }
 
-  void toParameter(string name, int paramNum, ADparlist<T>* graph);
+  void toParameter(const string& name, int paramNum, ADparlist<T>* graph);
   
   T forward_fn(vector<T> x);
   vector<T> forward_gr(vector<T> x);
 
   T fn();
   vector<T> gr();
+  vector<T>& gr(vector<T>& x);
   string JSON();
   void update(vector<T>& x);
 
@@ -147,7 +148,7 @@ AD<T>::AD(const AD<T>& x){
 // }
 
 template<class T>
-void AD<T>::toParameter(string name, int paramNum, ADparlist<T>* graph){
+void AD<T>::toParameter(const string& name, int paramNum, ADparlist<T>* graph){
   T x0 = this->root->curval;
   setRoot(new ADparameter<T>(x0,name,paramNum,graph));
   return;
@@ -181,6 +182,12 @@ vector<T> AD<T>::gr(){
   int np = this->root->grph->nparams;
   vector<T> x(np);
   for(int i = 0; i < np; ++i) x[i] = T(0.0);
+  this->root->bdfn(1.0,x);
+  return x;
+}
+
+template<class T>
+vector<T>& AD<T>::gr(vector<T>& x){
   this->root->bdfn(1.0,x);
   return x;
 }

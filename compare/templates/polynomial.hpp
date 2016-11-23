@@ -1,7 +1,7 @@
 
 
 template<class T>
-T polynomial_fn(T x, vector<T> a){
+T polynomial_fn(const T& x, const vector<T>& a){
   // T x0 = x;
   T res = a[0];
   for(int i = 1; i < a.size(); ++i){

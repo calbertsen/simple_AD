@@ -1,4 +1,14 @@
 
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <iomanip>   
+#include <GrAD/GrAD>
+
+using namespace std;
+
+#include "../templates/simple.hpp"
+
 namespace grad {
 
   vector<double> simple_grad(int seed){
@@ -63,4 +73,40 @@ namespace grad {
     return res;
   }
 
+}
+
+
+
+int main(){
+
+  using std::cout;
+  using std::setw;
+  using std::endl;
+
+
+  std::vector<double> res = grad::simple_grad(674);
+
+  cout << setw(10) << "Library";
+  cout << setw(10) << "Example";
+  cout << setw(10) << "Seed";
+  cout << setw(10) << "double";
+  cout << setw(10) << "all AD";
+  cout << setw(10) << "gr AD";
+  cout << setw(10) << "all ratio";
+  cout << setw(10) << "gr ratio";
+  cout << setw(10) << "fn corr";
+  cout << setw(10) << "gr corr";
+  cout << endl;
+  cout << setw(10) << "GrAD";
+  cout << setw(10) << "Simple";
+  cout << setw(10) << res[0];
+  cout << setw(10) << res[1];
+  cout << setw(10) << res[2];
+  cout << setw(10) << res[3];
+  cout << setw(10) << res[6];
+  cout << setw(10) << res[7];
+  cout << setw(10) << res[4];
+  cout << setw(10) << res[5];
+    cout << endl;
+  return 0;
 }

@@ -4,14 +4,40 @@ STD=@PROG_STD@
 CPPAD=@CPPAD_DIR@
 EIGEN=@EIGEN_DIR@
 
-all: compile run
+MASSIF_SETTING = --time-unit=ms --stacks=yes --depth=200 
 
-compile:
-	$(CXX) --std=$(STD) -w -I ../ -I ${CPPAD} -I ${EIGEN} compare.cpp -o compare.o
-	chmod +x compare.o
+CPPADex :=  $(shell find ./cppad -name "*.cpp")
+CPPADex_OUT := $(patsubst %.cpp,%.o,$(CPPADex))
 
-run: compile
-	./compare.o
+CPPADOex :=  $(shell find ./cppad_opt -name "*.cpp")
+CPPADOex_OUT := $(patsubst %.cpp,%.o,$(CPPADOex))
+
+GRADex :=  $(shell find ./grad -name "*.cpp")
+GRADex_OUT := $(patsubst %.cpp,%.o,$(GRADex))
+
+all: $(GRADex_OUT) $(CPPADex_OUT) $(CPPADOex_OUT)
+
+$(GRADex_OUT): %.o :
+	$(CXX) $*.cpp -o $*.o -g -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
+	./$*.o
+	valgrind --tool=massif ${MASSIF_SETTING} --massif-out-file=$*.massif ./$*.o
+
+$(CPPADex_OUT): %.o :
+	$(CXX) $*.cpp -o $*.o -g -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
+	./$*.o
+	valgrind --tool=massif ${MASSIF_SETTING} --massif-out-file=$*.massif ./$*.o
+
+$(CPPADOex_OUT): %.o :
+	$(CXX) $*.cpp -o $*.o -g -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
+	./$*.o
+	valgrind --tool=massif  ${MASSIF_SETTING} --massif-out-file=$*.massif ./$*.o
+
 
 clean:
 	rm -f ./compare.o
+	rm -f ${GRADex_OUT}
+	rm -f ${CPPADex_OUT}
+	rm -f ${CPPADOex_OUT}
+	rm -f $(patsubst %.o,%.massif,$(GRADex_OUT))
+	rm -f $(patsubst %.o,%.massif,$(CPPADex_OUT))
+	rm -f $(patsubst %.o,%.massif,$(CPPADOex_OUT))

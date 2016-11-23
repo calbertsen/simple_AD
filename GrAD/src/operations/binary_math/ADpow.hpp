@@ -61,7 +61,7 @@ AD<T> pow(const AD<T>& x, const AD<T>& y){
 
 template<class T>
 AD<T> pow(const AD<T>& x, double y){
-  AD<T> RAD = AD<T>(y);
+  AD<T> RAD(y);
   AD<T> newAD;
   ADnode<T>* orx = x.getRoot();
   newAD.setRoot(new ADpow<T>(orx,RAD.getRoot()));

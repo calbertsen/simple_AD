@@ -1,4 +1,20 @@
 
+#ifdef __cplusplus
+#if __cplusplus >= 201103L
+
+
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <iomanip>   
+#include <cppad/cppad.hpp>
+#include <Eigen/Dense>
+
+using namespace std;
+
+#include "../templates/polynomial.hpp"
+
+
 namespace cppad {
 
   vector<double> polynomial_grad(int seed, int na, bool optim = false){
@@ -77,3 +93,48 @@ namespace cppad {
   }
 
 }
+
+
+int main(){
+
+  using std::cout;
+  using std::setw;
+  using std::endl;
+
+
+  std::vector<double> res = cppad::polynomial_grad(674,20000);
+
+  cout << setw(10) << "Library";
+  cout << setw(10) << "Example";
+  cout << setw(10) << "Seed";
+  cout << setw(10) << "double";
+  cout << setw(10) << "all AD";
+  cout << setw(10) << "gr AD";
+  cout << setw(10) << "all ratio";
+  cout << setw(10) << "gr ratio";
+  cout << setw(10) << "fn corr";
+  cout << setw(10) << "gr corr";
+  cout << endl;
+  cout << setw(10) << "CppAD";
+  cout << setw(10) << "Polynom";
+  cout << setw(10) << res[0];
+  cout << setw(10) << res[1];
+  cout << setw(10) << res[2];
+  cout << setw(10) << res[3];
+  cout << setw(10) << res[6];
+  cout << setw(10) << res[7];
+  cout << setw(10) << res[4];
+  cout << setw(10) << res[5];
+    cout << endl;
+  return 0;
+}
+
+
+#else
+int main(){
+  cout << "Polynomial example skipped for C++ versions before 11" << endl;
+  return 0;
+}
+
+#endif
+#endif

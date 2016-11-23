@@ -1,0 +1,2 @@
+   Library   Example      Seed    double    all AD     gr AD all ratio  gr ratio   fn corr   gr corr
+  CppADopt     Eigen       674    0.0475  0.189011  0.009493   4.17903  0.199853         1         1

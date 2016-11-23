@@ -32,6 +32,7 @@ public:
   string JSON();
   void update(vector<T>& x);
 
+  
   void setRoot(ADnode<T>* r){
     if(root != r){
       ADnode<T>* oldRoot = root;

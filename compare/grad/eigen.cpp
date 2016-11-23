@@ -1,4 +1,20 @@
 
+#ifdef __cplusplus
+#if __cplusplus >= 201103L
+
+
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <iomanip>   
+#include <GrAD/GrAD>
+#include <Eigen/Dense>
+
+using namespace std;
+
+#include "../templates/eigen.hpp"
+
+
 namespace grad {
 
   vector<double> eigen_grad(int seed, int na){
@@ -79,3 +95,49 @@ namespace grad {
   }
 
 }
+
+
+
+int main(){
+
+  using std::cout;
+  using std::setw;
+  using std::endl;
+
+
+  std::vector<double> res = grad::eigen_grad(674,20);
+
+  cout << setw(10) << "Library";
+  cout << setw(10) << "Example";
+  cout << setw(10) << "Seed";
+  cout << setw(10) << "double";
+  cout << setw(10) << "all AD";
+  cout << setw(10) << "gr AD";
+  cout << setw(10) << "all ratio";
+  cout << setw(10) << "gr ratio";
+  cout << setw(10) << "fn corr";
+  cout << setw(10) << "gr corr";
+  cout << endl;
+  cout << setw(10) << "GrAD";
+  cout << setw(10) << "Eigen";
+  cout << setw(10) << res[0];
+  cout << setw(10) << res[1];
+  cout << setw(10) << res[2];
+  cout << setw(10) << res[3];
+  cout << setw(10) << res[6];
+  cout << setw(10) << res[7];
+  cout << setw(10) << res[4];
+  cout << setw(10) << res[5];
+    cout << endl;
+  return 0;
+}
+
+
+#else
+int main(){
+  cout << "Eigen example skipped for C++ versions before 11" << endl;
+  return 0;
+}
+
+#endif
+#endif

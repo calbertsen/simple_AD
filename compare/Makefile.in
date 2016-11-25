@@ -18,17 +18,17 @@ GRADex_OUT := $(patsubst %.cpp,%.o,$(GRADex))
 all: $(GRADex_OUT) $(CPPADex_OUT) $(CPPADOex_OUT)
 
 $(GRADex_OUT): %.o :
-	$(CXX) $*.cpp -o $*.o -g -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
+	$(CXX) $*.cpp -o $*.o -g -O2 -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
 	./$*.o
 	valgrind --tool=massif ${MASSIF_SETTING} --massif-out-file=$*.massif ./$*.o
 
 $(CPPADex_OUT): %.o :
-	$(CXX) $*.cpp -o $*.o -g -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
+	$(CXX) $*.cpp -o $*.o -g -O2 -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
 	./$*.o
 	valgrind --tool=massif ${MASSIF_SETTING} --massif-out-file=$*.massif ./$*.o
 
 $(CPPADOex_OUT): %.o :
-	$(CXX) $*.cpp -o $*.o -g -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
+	$(CXX) $*.cpp -o $*.o -g -O2 -I../ --std=$(STD) -w -I ${CPPAD} -I ${EIGEN}
 	./$*.o
 	valgrind --tool=massif  ${MASSIF_SETTING} --massif-out-file=$*.massif ./$*.o
 

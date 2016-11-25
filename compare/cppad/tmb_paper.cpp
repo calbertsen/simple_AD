@@ -1,4 +1,8 @@
 
+
+#define NDEBUG 1
+
+
 #ifdef __cplusplus
 #if __cplusplus >= 201103L
 

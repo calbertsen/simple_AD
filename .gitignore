@@ -5,3 +5,4 @@ Makefile
 **/Makefile
 autom4te.cache
 **/*.o
+**/*.massif

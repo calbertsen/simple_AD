@@ -1,5 +1,8 @@
 
 
+#define NDEBUG 1
+
+
 #include <iostream>
 #include <vector>
 #include <ctime>

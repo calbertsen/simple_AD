@@ -34,14 +34,14 @@ public:
 
   
   void setRoot(ADnode<T>* r){
-    if(root != r){
+    //if(root != r){
       ADnode<T>* oldRoot = root;
       root = r;
       if(root != NULL)
      	root->addOwner(this);
       if(oldRoot != NULL)
      	oldRoot->prune(this);
-    }
+      //}
     return;
   };
 

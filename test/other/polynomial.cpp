@@ -8,7 +8,7 @@ template<class T>
 T polynomial_fn(T x, vector<T> a){
   // T x0 = x;
   T res = a[0];
-  for(int i = 1; i < a.size(); ++i){
+  for(int i = 1; (size_t)i < a.size(); ++i){
     res += a[i] * pow(x,T(i));
     // res += a[i] * x0;
     // x0 *= x;
@@ -20,13 +20,13 @@ T polynomial_fn(T x, vector<T> a){
 vector<double> polynomial_true_gr(double x, vector<double> a){
   vector<double> r(a.size()+1);
   r[0] = 1.0;
-  for(int i = 1; i < a.size(); ++i){
+  for(int i = 1; (size_t)i < a.size(); ++i){
     r[i] = r[i-1] * x;
   }
   // w.r.t x
   double x0 = 1.0;
   int j = r.size()-1;
-  for(int i = 1; i < a.size(); ++i){
+  for(int i = 1; (size_t)i < a.size(); ++i){
     r[j] += i * x0 * a[i];
     x0 *= x;
   }
@@ -45,7 +45,7 @@ vector<double> polynomial_grad(int seed, int na){
   ADparlist<double>* grd = new ADparlist<double>();
 
   vector<double> a0(na);
-  for(int i = 0; i < a0.size(); ++i)
+  for(int i = 0; (size_t)i < a0.size(); ++i)
     a0[i] = rand() / (double)RAND_MAX;
   double x0 = rand() / (double)RAND_MAX;
 
@@ -82,7 +82,7 @@ vector<double> polynomial_grad(int seed, int na){
 
   bool feq = (fabs(fn - fnTrue) < 1e-16);
   bool greq = true;
-  for(int i = 0; i < gr.size(); ++i)
+  for(int i = 0; (size_t)i < gr.size(); ++i)
     greq = greq && (fabs(gr[i] - grTrue[i]) < 1e-16);
 
   res[0] = (double)seed; // seed

@@ -20,19 +20,19 @@ MEM_OUT := $(patsubst %.cpp,%.o,$(MEM))
 all: $(UNARY_OUT) $(OTHER_OUT) $(MEM_OUT)
 
 $(UNARY_OUT): %.o :
-	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
+	$(CXX) $*.cpp -Wpedantic -Wall -o $*.o -I../ --std=$(STD)
 	./$*.o
 
 $(RMATH_OUT): %.o :
-	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD) -lRmath
+	$(CXX) $*.cpp -Wpedantic -Wall -o $*.o -I../ --std=$(STD) -lRmath
 	./$*.o
 
 $(OTHER_OUT): %.o :
-	$(CXX) $*.cpp -o $*.o -I../ --std=$(STD)
+	$(CXX) $*.cpp -Wpedantic -Wall -o $*.o -I../ --std=$(STD)
 	./$*.o
 
 $(MEM_OUT): %.o :
-	$(CXX) $*.cpp -g -O0 -o $*.o -I../ --std=$(STD)
+	$(CXX) $*.cpp -Wpedantic -Wall -g -O0 -o $*.o -I../ --std=$(STD)
 	valgrind --error-exitcode=1 --suppressions=./memory/supmac.supp --gen-suppressions=all --leak-check=full ./$*.o
 
 clean:

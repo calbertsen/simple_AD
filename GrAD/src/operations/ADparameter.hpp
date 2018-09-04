@@ -33,17 +33,17 @@ ADparameter<T>::ADparameter(T x0, const string& name, int paramNum, ADparlist<T>
 
 template<class T>
 T ADparameter<T>::fn(vector<T> x){
-  if(x.size() != this->grph->nparams)
+  if(x.size() != (size_t)this->grph->nparams)
     throw "Wrong argument size to parameter";
   return x[this->whichParam];
 }
 
 template<class T>
 vector<T> ADparameter<T>::dfn(vector<T> x){
-  if(x.size() != this->grph->nparams)
+  if(x.size() != (size_t)this->grph->nparams)
     throw "Wrong argument size to parameter";
   vector<T> res(x.size());
-  for(int i = 0; i < x.size(); ++i){
+  for(int i = 0; (size_t)i < x.size(); ++i){
     if(this->whichParam == i){
       res[i] = T(1.0);
     }else{

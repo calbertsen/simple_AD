@@ -71,9 +71,9 @@ T ADsign<T>::fn(vector<T> x){
 template<class T>
 vector<T> ADsign<T>::dfn(vector<T> x){
   vector<T> res(x.size());
-  vector<T> dfnL = this->ptrL->dfn(x);
-  T fnL = this->ptrL->fn(x);
-  for(int i = 0; i < x.size(); ++i){
+  // vector<T> dfnL = this->ptrL->dfn(x);
+  // T fnL = this->ptrL->fn(x);
+  for(int i = 0; (size_t)i < x.size(); ++i){
     res[i] = T(0.0);
   }
   return res;      

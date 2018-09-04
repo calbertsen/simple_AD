@@ -40,7 +40,7 @@ template<class T>
 vector<T> ADusubtract<T>::dfn(vector<T> x){
   vector<T> res(x.size());
   vector<T> dfnL = this->ptrL->dfn(x);
-  for(int i = 0; i < x.size(); ++i){
+  for(int i = 0; (size_t)i < x.size(); ++i){
     res[i] = -dfnL[i];
   }
   return res;      
@@ -50,7 +50,7 @@ vector<T> ADusubtract<T>::dfn(vector<T> x){
 
 template<class T>
 void ADusubtract<T>::bdfn(T w, vector<T>& theta){
-  T fnL = this->ptrL->getValue();
+  //T fnL = this->ptrL->getValue();
   T wL = -w;
   this->ptrL->bdfn(wL,theta);
   return;

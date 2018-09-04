@@ -41,7 +41,7 @@ vector<T> ADatan2<T>::dfn(vector<T> x){
   vector<T> dfnR = this->ptrR->dfn(x);
   T fnL = this->ptrL->fn(x);
   T fnR = this->ptrR->fn(x);
-  for(int i = 0; i < x.size(); ++i){
+  for(int i = 0; (size_t)i < x.size(); ++i){
     res[i] = (dfnL[i]*fnR - dfnR[i]*fnL) / (fnL*fnL + fnR*fnR);
   }
   return res;      

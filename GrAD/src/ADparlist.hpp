@@ -46,7 +46,7 @@ int ADparlist<T>::Independent(AD<T>& par){
 template<class T>
 int ADparlist<T>::Independent(vector<AD<T>* >& par){
   int res = 0;
-  for(int i = 0; i < par.size(); ++i){
+  for(int i = 0; (size_t)i < par.size(); ++i){
     res += Independent(par[i]);
   }
   return res;
@@ -56,7 +56,7 @@ int ADparlist<T>::Independent(vector<AD<T>* >& par){
 template<class T>
 int ADparlist<T>::Independent(vector<AD<T> >* par){
   int res = 0;
-  for(int i = 0; i < par->size(); ++i){
+  for(int i = 0; (size_t)i < par->size(); ++i){
     res += Independent(&(par->operator[](i)));
   }
   return res;
@@ -65,7 +65,7 @@ int ADparlist<T>::Independent(vector<AD<T> >* par){
 template<class T>
 int ADparlist<T>::Independent(vector<AD<T> >& par){
   int res = 0;
-  for(int i = 0; i < par.size(); ++i){
+  for(int i = 0; (size_t)i < par.size(); ++i){
     res += Independent(&(par[i]));
   }
   return res;

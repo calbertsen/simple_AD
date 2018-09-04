@@ -9,7 +9,7 @@ using namespace GrAD;
 template<class T>
 T tmb_paper_fn(vector<T> x){
   T res = pow(x[0],T(2.0)); //x[0]*x[0];
-  for(int i = 1; i < x.size(); ++i){
+  for(int i = 1; (size_t)i < x.size(); ++i){
     res += pow((x[i] - x[i-1]),T(2.0));
     //res += (x[i] - x[i-1]) * (x[i] - x[i-1]);
   }
@@ -22,7 +22,7 @@ vector<double> tmb_paper_true_gr(vector<double> x){
   vector<double> r(x.size());
 
   r[0] = 4*x[0] - 2 * x[1];
-  for(int i = 1; i < x.size()-1; ++i)
+  for(int i = 1; (size_t)i < x.size()-1; ++i)
     r[i] = -2.0*x[i+1] + 4.0 * x[i] - 2.0*x[i-1];
   r[x.size()-1] = 2*x[x.size()-1] - 2 * x[x.size()-2];
   
@@ -41,7 +41,7 @@ vector<double> tmb_paper_grad(int seed, int na){
   ADparlist<double>* grd = new ADparlist<double>();
 
   vector<double> x0(na);
-  for(int i = 0; i < x0.size(); ++i)
+  for(int i = 0; (size_t)i < x0.size(); ++i)
     x0[i] = rand() / (double)RAND_MAX;
     
   vector<AD<double> > x(na);
@@ -73,7 +73,7 @@ vector<double> tmb_paper_grad(int seed, int na){
 
   bool feq = (fabs(fn - fnTrue) < 1e-12);
   bool greq = true;
-  for(int i = 0; i < gr.size(); ++i){
+  for(int i = 0; (size_t)i < gr.size(); ++i){
     greq = greq && (fabs(gr[i] - grTrue[i]) < 1e-12);
   }
   res[0] = (double)seed; // seed

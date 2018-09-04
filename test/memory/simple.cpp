@@ -61,7 +61,7 @@ vector<double> simple_grad(int seed){
 
   bool feq = (fabs(fn - fnTrue) < 1e-16);
   bool greq = true;
-  for(int i = 0; i < gr.size(); ++i)
+  for(int i = 0; (size_t)i < gr.size(); ++i)
     greq = greq && (fabs(gr[i] - grTrue[i]) < 1e-16);
 
   res[0] = (double)seed; // seed

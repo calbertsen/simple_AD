@@ -43,7 +43,7 @@ vector<T> ADpow<T>::dfn(vector<T> x){
   T fnL = this->ptrL->fn(x);
   T fnR = this->ptrR->fn(x);
   T pfn = pow(fnL,fnR);
-  for(int i = 0; i < x.size(); ++i){
+  for(int i = 0; (size_t)i < x.size(); ++i){
     res[i] = pfn * (dfnR[i] * log(fnL) + fnR * dfnL[i] / fnL);
   }
   return res;      

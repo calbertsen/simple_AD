@@ -37,7 +37,7 @@ vector<bool> json_test(int seed){
 
   std::cout << "Function value: " << fn << std::endl;
   std::cout << "gradient value: ";
-  for(int i = 0; i < gr.size(); ++i)
+  for(int i = 0; (size_t)i < gr.size(); ++i)
     std::cout << "  " << gr[i];
   std::cout << std::endl;
 

@@ -45,6 +45,7 @@ using std::tanh;
 using std::atan2;
 using std::pow;
 
+using std::size_t;
 
 #ifdef __cplusplus
 #if __cplusplus >= 201103L

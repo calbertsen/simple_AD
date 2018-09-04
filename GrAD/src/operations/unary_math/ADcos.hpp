@@ -39,7 +39,7 @@ vector<T> ADcos<T>::dfn(vector<T> x){
   vector<T> res(x.size());
   vector<T> dfnL = this->ptrL->dfn(x);
   T fnL = this->ptrL->fn(x);
-  for(int i = 0; i < x.size(); ++i){
+  for(int i = 0; (size_t)i < x.size(); ++i){
     res[i] = - dfnL[i] * sin(fnL);
   }
   return res;      

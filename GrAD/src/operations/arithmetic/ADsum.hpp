@@ -51,8 +51,8 @@ vector<T> ADsum<T>::dfn(vector<T> x){
 
 template<class T>
 void ADsum<T>::bdfn(T w, vector<T>& theta){
-  T fnL = this->ptrL->getValue();
-  T fnR = this->ptrR->getValue();
+  // T fnL = this->ptrL->getValue();
+  // T fnR = this->ptrR->getValue();
   T wL = w;
   T wR = w;
   this->ptrL->bdfn(wL,theta);

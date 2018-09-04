@@ -37,6 +37,7 @@ public:
   void setValue(T x0);
   T getValue();
 
+  
 protected:
   
   void prune(AD<T>* requester);
@@ -46,7 +47,6 @@ protected:
   void addParent(ADnode<T>* p);
   void removeParent(ADnode<T>* p);
   
-  
 protected:
   ADnode();
   ADnode(const string& name, int paramNum, ADparlist<T>* graph);
@@ -54,12 +54,15 @@ protected:
   ADnode(const string& name, ADnode<T>* L, ADnode<T>* R);
   ADnode(const string& name, ADnode<T>* L);
   ADnode(const string& name, ADnode<T>& L, ADnode<T>& R);
+  virtual ~ADnode();
+
 };
 
-
+template<class T>
+ADnode<T>::~ADnode(){}
 
 template<class T>
-ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED"), parents(0), owners(0)
+ADnode<T>::ADnode() : parents(0), owners(0), isBaseParam(false), baseName("UNINITIALIZED")
 {
   grph = NULL;
   whichParam = -100;
@@ -68,27 +71,27 @@ ADnode<T>::ADnode() : isBaseParam(false), baseName("UNINITIALIZED"), parents(0),
 }
 
 template<class T>
-ADnode<T>::ADnode(const string& name, int paramNum,ADparlist<T>* graph) : isBaseParam(true), baseName(name), whichParam(paramNum), parents(0), owners(0)
+ADnode<T>::ADnode(const string& name, int paramNum,ADparlist<T>* graph) : parents(0), owners(0), isBaseParam(true), baseName(name), whichParam(paramNum)
 { 
   grph = graph;
   if(whichParam == -1)
     throw 101;
   ptrL = NULL;
   ptrR = NULL;
-};
+}
 
 template<class T>
-ADnode<T>::ADnode(const string& name) : isBaseParam(false), baseName(name), parents(0), owners(0)
+ADnode<T>::ADnode(const string& name) : parents(0), owners(0), isBaseParam(false), baseName(name)
 { 
   grph = NULL;
   whichParam = -1;
   ptrL = NULL;
   ptrR = NULL;
-};
+}
 
 
 template<class T>
-ADnode<T>::ADnode(const string& name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(false), baseName(name), parents(0), owners(0) {
+ADnode<T>::ADnode(const string& name, ADnode<T>* L, ADnode<T>* R) : parents(0), owners(0), isBaseParam(false), baseName(name) {
   L->addParent(this);
   R->addParent(this);
   if((L->grph != R->grph) && L->grph != NULL && R->grph != NULL)
@@ -107,7 +110,7 @@ ADnode<T>::ADnode(const string& name, ADnode<T>* L, ADnode<T>* R) : isBaseParam(
 }
 
 template<class T>
-ADnode<T>::ADnode(const string& name, ADnode<T>* L) : isBaseParam(false), baseName(name), parents(0), owners(0) {
+ADnode<T>::ADnode(const string& name, ADnode<T>* L) : parents(0), owners(0), isBaseParam(false), baseName(name) {
   L->addParent(this);
   grph = L->grph;
   ptrL = L;
@@ -116,7 +119,7 @@ ADnode<T>::ADnode(const string& name, ADnode<T>* L) : isBaseParam(false), baseNa
 }
 
 template<class T>
-ADnode<T>::ADnode(const string& name, ADnode<T>& L, ADnode<T>& R) : isBaseParam(false), baseName(name), parents(0), owners(0){
+ADnode<T>::ADnode(const string& name, ADnode<T>& L, ADnode<T>& R) : parents(0), owners(0), isBaseParam(false), baseName(name){
   L.addParent(this);
   R.addParent(this);
   if(L.grph != R.grph)
@@ -138,17 +141,17 @@ ADnode<T>::ADnode(const string& name, ADnode<T>& L, ADnode<T>& R) : isBaseParam(
 template<class T>
 T ADnode<T>::fn(vector<T> x){
   throw 100;
-};
+}
 
 template<class T>
 vector<T> ADnode<T>::dfn(vector<T> x){
   throw 100;
-};
+}
 
 template<class T>
 void ADnode<T>::bdfn(T w, vector<T>& theta){
   throw 100;
-};
+}
 
 
 template<class T>
@@ -178,25 +181,25 @@ void ADnode<T>::update(vector<T>& theta){
 template<class T>
 void ADnode<T>::setValue(T x0){
   curval = x0;
-};
+}
 
 template<class T>
 T ADnode<T>::getValue(){
   return curval;
-};
+}
 
 
 template<class T>
 void ADnode<T>::addParent(ADnode<T>* p){
   parents++;
   return;
-};
+}
 
 template<class T>
 void ADnode<T>::removeParent(ADnode<T>* p){
   parents--;
   return;
-};
+}
 
 
 template<class T>
@@ -204,7 +207,7 @@ void ADnode<T>::addOwner(const AD<T>* o){
   if(o != NULL)
     owners++;
   return;
-};
+}
 
 template<class T>
 void ADnode<T>::removeOwner(const AD<T>* o){
@@ -213,7 +216,7 @@ void ADnode<T>::removeOwner(const AD<T>* o){
   if(owners < 0)
     throw "OUT OF BOUNDS";
   return;
-};
+}
 
 
 template<class T>
@@ -233,4 +236,4 @@ void ADnode<T>::prune(AD<T>* requester){
     if(requester != NULL || !isBaseParam)// && !isBaseParam)
       delete this;
   }
-};
+}

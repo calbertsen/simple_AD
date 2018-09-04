@@ -11,7 +11,7 @@
 // Base AD graph classes
 
 template<class T>
-struct ADnode;
+class ADnode;
 template<class T>
 struct ADparlist;
 
@@ -29,4 +29,4 @@ template<class T>
 struct ADsubtract;
 
 template<class T>
-struct AD;
+class AD;

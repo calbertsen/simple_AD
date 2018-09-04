@@ -36,12 +36,12 @@ int ADparlist<T>::Independent(AD<T>* par){
   }else{
     return 0;
   }  
-};
+}
 
 template<class T>
 int ADparlist<T>::Independent(AD<T>& par){
   return Independent(&par);
-};
+}
 
 template<class T>
 int ADparlist<T>::Independent(vector<AD<T>* >& par){
@@ -50,7 +50,7 @@ int ADparlist<T>::Independent(vector<AD<T>* >& par){
     res += Independent(par[i]);
   }
   return res;
-};
+}
 
 
 template<class T>
@@ -69,7 +69,7 @@ int ADparlist<T>::Independent(vector<AD<T> >& par){
     res += Independent(&(par[i]));
   }
   return res;
-};
+}
 
 
 
